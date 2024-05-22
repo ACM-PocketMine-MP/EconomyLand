@@ -1,0 +1,10 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/ACM-PocketMine-MP/EconomyLand
+build-by-default: true
+branches:
+- main
+projects:
+  EconomyLand:
+    path: ""
+    lint:
+      phpstan: false
+...
