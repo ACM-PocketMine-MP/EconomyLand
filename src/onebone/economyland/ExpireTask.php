@@ -25,14 +25,16 @@ use pocketmine\scheduler\Task;
 use onebone\economyland\EconomyLand;
 
 class ExpireTask extends Task{
-	private $landId;
+
+	protected mixed $landId;
+	protected EconomyLand $plugin;
 	
 	public function __construct(EconomyLand $plugin, $landId){
 		$this->plugin = $plugin;
 		$this->landId = $landId;
 	}
 	
-	public function onRun(int $currentTick){
+	public function onRun(): void{
 		$this->plugin->expireLand($this->landId);
 	}
 }

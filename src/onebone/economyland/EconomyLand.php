@@ -38,7 +38,7 @@ use pocketmine\world\Position;
 use pocketmine\world\World as Level;
 use pocketmine\event\EventPriority;
 
-use cooldogopmdev\BedrockEconomy\BedrockEconomy;
+use onebone\economyapi\EconomyAPI;
 use onebone\economyland\database\YamlDatabase;
 use onebone\economyland\database\SQLiteDatabase;
 use onebone\economyland\database\Database;
@@ -604,9 +604,11 @@ class EconomyLand extends PluginBase implements Listener
         $this->permissionCheck($event);
     }
 
-    public function permissionCheck(Event $event)
-    {
-        /** @var $player Player */
+    /**
+     * @param PlayerInteractEvent|BlockBreakEvent $event
+     * @return boolean
+     */
+    public function permissionCheck(PlayerInteractEvent|BlockBreakEvent $event): bool{
         $player = $event->getPlayer();
         if ($event instanceof PlayerInteractEvent) {
             $block = $event->getBlock()->getSide($event->getFace());

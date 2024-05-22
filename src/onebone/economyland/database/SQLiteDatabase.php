@@ -20,17 +20,15 @@
 
 namespace onebone\economyland\database;
 
-use pocketmine\level\Level;
+use pocketmine\world\World;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 
 class SQLiteDatabase implements Database {
-    /**
-     * @var array
-     */
-    private $land, $config;
-    private $path;
+
+    private mixed $land, $config;
+    private string $path;
 
     CONST INVITEE_SEPERATOR = ";";
 
@@ -57,7 +55,7 @@ class SQLiteDatabase implements Database {
     }
 
     public function getByCoord($x, $z, $level) {
-        if ($level instanceof Level) {
+        if ($level instanceof World) {
             $level = $level->getFolderName();
         }
         return $this->land->query("SELECT * FROM land WHERE (startX <= $x AND endX >= $x) AND (startZ <= $z AND endZ >= $z) AND level = '$level'")->fetchArray(SQLITE3_ASSOC);
@@ -129,7 +127,7 @@ class SQLiteDatabase implements Database {
     }
 
     public function addLand($startX, $endX, $startZ, $endZ, $level, $price, $owner, $expires = null, $invitee = []) {
-        if ($level instanceof Level) {
+        if ($level instanceof World) {
             $level = $level->getFolderName();
         }
 
@@ -158,7 +156,7 @@ class SQLiteDatabase implements Database {
     }
 
     public function checkOverlap($startX, $endX, $startZ, $endZ, $level) {
-        if ($level instanceof Level) {
+        if ($level instanceof World) {
             $level = $level->getFolderName();
         }
         $result = $this->land->query("SELECT * FROM land WHERE startX <= $endX AND endX >= $startX AND startZ <= $endZ AND endZ >= $startZ AND level = '$level'")->fetchArray(SQLITE3_ASSOC);

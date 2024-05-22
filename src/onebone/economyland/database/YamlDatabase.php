@@ -21,7 +21,7 @@
 namespace onebone\economyland\database;
 
 use onebone\economyland\event\LandRemoveEvent;
-use pocketmine\level\Level;
+use pocketmine\world\World;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\player\Player;
@@ -77,7 +77,7 @@ class YamlDatabase implements Database{
 	}
 
 	public function getByCoord($x, $z, $level){
-		if($level instanceof Level){
+		if($level instanceof World){
 			$level = $level->getFolderName();
 		}
 		$x=floor($x);
@@ -142,7 +142,7 @@ class YamlDatabase implements Database{
 	}
 
 	public function addLand($startX, $endX, $startZ, $endZ, $level, $price, $owner, $expires = null, $invitee = []){
-		if($level instanceof Level){
+		if($level instanceof World){
 			$level = $level->getFolderName();
 		}
 		if($this->checkOverlap($startX, $endX, $startZ, $endZ, $level)){
@@ -200,7 +200,7 @@ class YamlDatabase implements Database{
 	}
 
 	public function checkOverlap($startX, $endX, $startZ, $endZ, $level){
-		if($level instanceof Level){
+		if($level instanceof World){
 			$level = $level->getFolderName();
 		}
 		foreach($this->land as $land){
